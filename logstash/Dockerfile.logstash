@@ -1,0 +1,14 @@
+FROM docker.elastic.co/logstash/logstash:8.10.2
+
+# delete default configuration
+RUN rm -f /usr/share/logstash/pipeline/logstash.conf
+
+# Install necessary plugins
+RUN bin/logstash-plugin install logstash-input-elasticsearch \
+    && bin/logstash-plugin install logstash-output-webhdfs 
+    
+# copy configurations
+# our logstash conf
+COPY ./logstash/logstash_conf/ /usr/share/logstash/pipeline/
+# our pipeline
+COPY ./logstash/pipeline.yml /usr/share/logstash/config/pipelines.yml

@@ -1,0 +1,7 @@
+celery
+requests
+confluent_kafka 
+psutil
+python-dotenv
+redis
+httpx
