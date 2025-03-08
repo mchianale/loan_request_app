@@ -1,4 +1,11 @@
 # Processus d’Évaluation des Demandes de Prêt
+
+Ce TD a pour objectif d’implémenter un processus métier de gestion des demandes de prêt
+immobilier en utilisant des concepts avancés de microservices, de tâches asynchrones, et de
+messagerie interservices. Les étudiants devront appliquer des notions de coroutines, files de
+messages, tâches en arrière-plan et événements pour assurer une exécution efficace et
+distribuée du processus.
+
 ## Demo
 
 ---
