@@ -16,9 +16,9 @@ distribuée du processus.
 **1️⃣ MongoDB (Base de données) :** 
 - Base de données `NoSQL` utilisée pour stocker les informations des clients (`users`) et gérer leurs demandes de prêt (`loans`).
 - Utilise clients asynchrones et synchrones pour gérer les requêtes efficacement.
-- Seulement accessible par l'API (`userBackEnd`)[https://github.com/mchianale/loan_request_app/tree/main/userBackEnd]
+- Seulement accessible par l'API [`userBackEnd`](https://github.com/mchianale/loan_request_app/tree/main/userBackEnd)
 
-**2️⃣ (User Backend)[https://github.com/mchianale/loan_request_app/tree/main/userBackEnd] (FastAPI) :**
+**2️⃣ [User Backend](https://github.com/mchianale/loan_request_app/tree/main/userBackEnd) (FastAPI) :**
 - API backend construite avec FastAPI pour gérer **les connexion et inscription, la gestion de compte et la création de demandes de prêt.**
 - Produit des logs et des demandes de prêt vers `Kafka`.
 
