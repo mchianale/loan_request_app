@@ -25,9 +25,9 @@ distribuée du processus.
 **3️⃣ Zookeeper & Kafka Brokers :**
 - `Zookeeper` : Coordonne les brokers Kafka.
 - `Kafka Brokers` :
-1. 📨 Reçoivent des demandes de prêt du backend utilisateur.
-2. 🔄 Distribuent ces demandes aux services de traitement via topics Kafka.
-3. 📤 Produisent des logs vers ELK pour la centralisation des journaux.
+  1. 📨 Reçoivent des demandes de prêt du backend utilisateur.
+  2. 🔄 Distribuent ces demandes aux services de traitement via topics Kafka.
+  3. 📤 Produisent des logs vers ELK pour la centralisation des journaux.
 
 
 ---
