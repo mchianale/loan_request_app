@@ -47,9 +47,9 @@ distribuée du processus.
 **5️⃣ [Celery App](https://github.com/mchianale/loan_request_app/tree/main/celeryApp) (Traitement Asynchrone) :**  
 - Gestion du traitement parallèle via `Celery` et `RabbitMQ`.  
 - Exécute les tâches critiques de validation et d’évaluation des prêts :  
-  - ✅ Évaluation de l'historique de crédit et du profil (**propertyCheckApp - FastAPI**).  
-  - ✅ Évaluation du projet immobilier (**creditCheckApp - FastAPI**).  
-  - ✅ Génération de la décision finale et du calendrier de remboursement (**decisionApp - FastAPI**).  
+  - ✅ Évaluation de l'historique de crédit et du profil ([**creditCheckApp - FastAPI**](https://github.com/mchianale/loan_request_app/tree/main/creditCheckApp)).  
+  - ✅ Évaluation du projet immobilier ([**propertyCheckApp - FastAPI**](https://github.com/mchianale/loan_request_app/tree/main/propertyCheckApp)).  
+  - ✅ Génération de la décision finale et du calendrier de remboursement ([**decisionApp - FastAPI**](https://github.com/mchianale/loan_request_app/tree/main/decisionApp)).  
 - Produit des logs vers `Kafka` pour centralisation et monitoring.  
 
 ---
