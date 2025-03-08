@@ -18,9 +18,13 @@ distribuée du processus.
 - Utilise clients asynchrones et synchrones pour gérer les requêtes efficacement.
 - Seulement accessible par l'API [`userBackEnd`](https://github.com/mchianale/loan_request_app/tree/main/userBackEnd).
 
+---
+
 **2️⃣ [User Backend](https://github.com/mchianale/loan_request_app/tree/main/userBackEnd) (FastAPI) :**
 - API backend construite avec FastAPI pour gérer **les connexion et inscription, la gestion de compte et la création de demandes de prêt.**
 - Produit des logs et des demandes de prêt vers `Kafka`.
+
+---
 
 **3️⃣ Zookeeper & Kafka Brokers :**
 - `Zookeeper` : Coordonne les brokers Kafka.
@@ -29,12 +33,16 @@ distribuée du processus.
   2. 🔄 Distribuent ces demandes aux services de traitement via topics Kafka.
   3. 📤 Produisent des logs vers ELK pour la centralisation des journaux.
 
+---
+
 **4️⃣ [ELK Stack](https://github.com/mchianale/loan_request_app/tree/main/logstash) (Logstash, Elasticsearch, Kibana) :**  
 - Centralise et visualise les logs du système.  
 - Composants principaux :
   - 📊 **Logstash** : Récupère et traite les logs de Kafka.  
   - 🔍 **Elasticsearch** : Stocke les logs pour une recherche efficace.  
   - 📈 **Kibana** : Fournit une interface de visualisation des logs et des métriques de l'application.  
+
+---
 
 **5️⃣ [Celery App](https://github.com/mchianale/loan_request_app/tree/main/celeryApp) (Traitement Asynchrone) :**  
 - Gestion du traitement parallèle via `Celery` et `RabbitMQ`.  
@@ -44,9 +52,13 @@ distribuée du processus.
   - ✅ Génération de la décision finale et du calendrier de remboursement (**decisionApp - FastAPI**).  
 - Produit des logs vers `Kafka` pour centralisation et monitoring.  
 
+---
+
 **6️⃣ [Loan Notification App](https://github.com/mchianale/loan_request_app/tree/main/loanNotificationApp) (FastAPI + WebSockets) :**  
 - Fournit une API `WebSockets` pour notifier les utilisateurs du statut de leur demande de prêt en **temps réel**.  
 - Se connecte au backend Celery et à Kafka pour récupérer les mises à jour et envoyer des notifications.  
+
+---
 
 **7️⃣ [Streamlit Frontend](https://github.com/mchianale/loan_request_app/tree/main/stFrontEnd) :**  
 - Interface utilisateur interactive permettant aux utilisateurs de :  
