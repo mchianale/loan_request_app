@@ -140,6 +140,7 @@ curl -X DELETE -u elastic:<your_password>  "http://localhost:9200/logs"
 
 ---
 
+## Kibana Dashboard
 
 # a faire 
 ## Test
@@ -160,18 +161,3 @@ curl -X DELETE -u elastic:<your_password>  "http://localhost:9200/logs"
 
 
 
-
-# A faire 
-Service des demandes de prêt (création et validation des dossiers)
-• Service de vérification du crédit (évaluation des antécédents du client)
-• Service d’évaluation du bien (analyse de la valeur du bien)
-• Service de décision (approbation ou rejet de la demande)
-• Service de notification (envoi des résultats aux clients)
-
- curl -X DELET-u elastic:b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8 "http://localhost:9200/logs"
-
-streamlit run stFrontEnd/main.py
-
-docker exec -it krabbitmq bash      
-rabbitmqctl change_password rabbitmq b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
-Shawn901@gmail.com
