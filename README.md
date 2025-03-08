@@ -29,6 +29,32 @@ distribuée du processus.
   2. 🔄 Distribuent ces demandes aux services de traitement via topics Kafka.
   3. 📤 Produisent des logs vers ELK pour la centralisation des journaux.
 
+**4️⃣ [ELK Stack](https://github.com/mchianale/loan_request_app/tree/main/logstash) (Logstash, Elasticsearch, Kibana) :**  
+- Centralise et visualise les logs du système.  
+- Composants principaux :
+  - 📊 **Logstash** : Récupère et traite les logs de Kafka.  
+  - 🔍 **Elasticsearch** : Stocke les logs pour une recherche efficace.  
+  - 📈 **Kibana** : Fournit une interface de visualisation des logs et des métriques de l'application.  
+
+**5️⃣ [Celery App](https://github.com/mchianale/loan_request_app/tree/main/celeryApp) (Traitement Asynchrone) :**  
+- Gestion du traitement parallèle via `Celery` et `RabbitMQ`.  
+- Exécute les tâches critiques de validation et d’évaluation des prêts :  
+  - ✅ Évaluation de l'historique de crédit et du profil (**propertyCheckApp - FastAPI**).  
+  - ✅ Évaluation du projet immobilier (**creditCheckApp - FastAPI**).  
+  - ✅ Génération de la décision finale et du calendrier de remboursement (**decisionApp - FastAPI**).  
+- Produit des logs vers `Kafka` pour centralisation et monitoring.  
+
+**6️⃣ [Loan Notification App](https://github.com/mchianale/loan_request_app/tree/main/loanNotificationApp) (FastAPI + WebSockets) :**  
+- Fournit une API `WebSockets` pour notifier les utilisateurs du statut de leur demande de prêt en **temps réel**.  
+- Se connecte au backend Celery et à Kafka pour récupérer les mises à jour et envoyer des notifications.  
+
+**7️⃣ [Streamlit Frontend](https://github.com/mchianale/loan_request_app/tree/main/stFrontEnd) :**  
+- Interface utilisateur interactive permettant aux utilisateurs de :  
+  - 🔑 **Se connecter et gérer leur compte**.  
+  - 🏦 **Créer une nouvelle demande de prêt**.  
+  - 🔎 **Suivre en temps réel l’évaluation de leur demande de prêt**.  
+  - 📊 **Visualiser les décisions de crédit et l'historique des prêts**.  
+  - 📡 **Recevoir des mises à jour instantanées via `WebSockets`**.  
 
 ---
 
