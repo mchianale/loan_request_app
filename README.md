@@ -1,3 +1,36 @@
+# Processus d’Évaluation des Demandes de Prêt
+## Demo
+
+---
+
+## Architecture 
+![global_sch](https://github.com/mchianale/loan_request_app/blob/main/docs/main_archi.png)
+
+---
+
+## Réutilsiation 
+
+---
+
+
+# a faire 
+## Test
+## Kubernetes
+## dashboard
+
+## README
+## rapport
+### Intro
+### Architecture globale 
+### Gestion des uilisateurs (login / singup token de session etc.. )
+### Service de demande de pret (chaque service & celeri)
+### Notification en tmpes reel (websocket et celeri)
+### Interac graphiqye utilisateur
+### Centralisation des logs
+### Cloud Kubernetes
+### Test 
+
+
 docker-compose up -d
 docker-compose down -v
 docker-compose up --build
@@ -33,28 +66,4 @@ streamlit run stFrontEnd/main.py
 
 docker exec -it krabbitmq bash      
 rabbitmqctl change_password rabbitmq b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
-
-# Nom du projet
-## Architecture 
-## Réutilsiation 
-1. Lancer une fois le projet avec docker:
-
-# a faire 
-## Test
-## Kubernetes
-## dashboard
-
-## README
-## rapport
-### Intro
-### Architecture globale 
-### Gestion des uilisateurs (login / singup token de session etc.. )
-### Service de demande de pret (chaque service & celeri)
-### Notification en tmpes reel (websocket et celeri)
-### Interac graphiqye utilisateur
-### Centralisation des logs
-### Cloud Kubernetes
-### Test 
-
-
 Shawn901@gmail.com
