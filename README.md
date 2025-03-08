@@ -71,7 +71,7 @@ distribuée du processus.
 ---
 
 ## Réutilsiation 
-Le ficher `.env`:
+### **Le fichier `.env`** 
 ```
 # Mongodb
 MONGO_INITDB_ROOT_USERNAME=myuser
@@ -83,7 +83,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 # ELK
 ELASTIC_USERNAME=elastic
 ELASTIC_PASSWORD=b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
-ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYV90b2tlbjoydF9xNVBVelFKeXZzN0lmcGtsY2F3
+ELASTICSEARCH_SERVICEACCOUNTTOKEN=<generate_after>
 # Kafka kafka-0:9092,kafka-1:9092,kafka-2:9092
 KAFKA_BROKERS=kafka-0:9092,kafka-1:9092,kafka-2:9092
 # Celery
@@ -104,16 +104,40 @@ UPDATE_LOAN_URL=http://user-backend-service:8000/update_loan_request
 # ADMIN_PASSWORD to notify using LoanNotifyApp
 ADMIN_PASSWORD=admin_password_for_notification_security
 ```
+
 ### Premier lancement
-- Lancer un prmière fois le `docker-compose`
+1. Lancer une première fois `docker-compose`:
 ```bash
 docker-compose up -d
 ```
 
-- Créer une clé Elatsticsearhc pour Kibana:
+2. Créer un token `Elastic-search` pour `Kibana`:
 ```bash
 curl -X POST -u elastic:<your_password> "localhost:9200/_security/service/elastic/kibana/credential/token/kibana_token?pretty"
 ```
+
+3. Modifier ensuite le fichier `.env`:
+```
+ELASTICSEARCH_SERVICEACCOUNTTOKEN=<le toke retourné>
+```
+
+4. Relancer `docker-compose` avec la mise à jour:
+```
+docker-compose --env-file .env up -d
+```
+Si tout fonctionne, accédez à [kibana](http://localhost:5601/app/home#/).
+
+### Lancer le front
+```bash
+streamlit run stFrontEnd/main.py
+```
+
+### Réinitialiser les logs
+Supprimer l'index `logs` d'`Elastic-search`:
+```bash
+curl -X DELETE -u elastic:<your_password>  "http://localhost:9200/logs"
+```
+
 ---
 
 
@@ -135,27 +159,7 @@ curl -X POST -u elastic:<your_password> "localhost:9200/_security/service/elasti
 ### Test 
 
 
-docker-compose up -d
-docker-compose down -v
-docker-compose up --build
 
-# deleyt index
-curl -X DELETE -u elastic:b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8 "http://localhost:9200/logs"
-
-#  create token
-curl -X POST -u elastic:b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8 "localhost:9200/_security/service/elastic/kibana/credential/token/kibana_token?pretty"
-
-docker-compose --env-file .env up -d
-docker exec -it kibana env | Select-String "ELASTICSEARCH_SERVICEACCOUNTTOKEN"
-
-# check kafka produce
-docker exec -it kafka-0 bash
-cd /opt/bitnami/kafka/bin/
-./kafka-console-consumer.sh --bootstrap-server kafka-0:9092 --topic logs --from-beginning
-
-docker exec -it kafka-0 bash
-kafka-consumer-groups.sh --bootstrap-server kafka-0:9092 --list
-kafka-consumer-groups.sh --bootstrap-server kafka-0:9092 --group logstash --describe
 
 # A faire 
 Service des demandes de prêt (création et validation des dossiers)
