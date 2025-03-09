@@ -59,6 +59,7 @@ distribuée du processus.
 **6️⃣ [Loan Notification App](https://github.com/mchianale/loan_request_app/tree/main/loanNotificationApp) (FastAPI + WebSockets) :**  
 - Fournit une API `WebSockets` pour notifier les utilisateurs du statut de leur demande de prêt en **temps réel**.  
 - Se connecte au backend Celery et à Kafka pour récupérer les mises à jour et envoyer des notifications.  
+- Produit des logs vers `Kafka` pour centralisation et monitoring.  
 
 ---
 
