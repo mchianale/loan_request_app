@@ -72,6 +72,28 @@ distribuée du processus.
 
 ---
 
+## Cycle de vie d'une demande
+![global_sch](https://github.com/mchianale/loan_request_app/blob/main/docs/loan_life.png)
+
+Lorsqu'un utilisateur est connecté, il peut créer une nouvelle demande de prêt. Si la création est réussie, la demande est enregistrée dans la base de données MongoDB et est annotée comme Pending.
+
+Simultanément, un message Kafka est produit vers le topic loan_topic. L'application Celery, qui fonctionne en continu, consomme ces messages Kafka. Lorsqu'une nouvelle demande est détectée, un groupe de tâches est lancé.
+
+**Étapes du traitement :**
+- **Évaluation en parallèle :**
+  L'évaluation du profil et du crédit (via `creditCheckApp - FastAPI`).
+  L'évaluation du projet immobilier (via `propertyCheckApp - FastAPI`).
+  Ces évaluations sont effectuées simultanément.
+- **Validation des évaluations :**
+  Si l'une des deux tâches échoue ou si la demande est refusée, le processus est arrêté immédiatement, et la demande de prêt est mise à jour en base de données avec le statut Denied ou Cancelled.
+- **Validation finale :**
+  Si les deux évaluations sont approuvées, une dernière tâche est exécutée pour retourner la décision finale et générer un plan de remboursement (via `decisionApp - FastAPI`).
+  La demande de prêt est alors mise à jour avec le statut final : `Denied` ou `Approved`.
+- **Notification en temps réel :**
+  Chaque tâche envoie des notifications en temps réel via WebSockets à l'application LoanDecisionApp, permettant aux utilisateurs d'être informés en direct de l'état de l'évaluation de leur demande.
+
+---
+
 ## Réutilsiation 
 ### Le fichier `.env`
 Créer un fichier `.env`:
