@@ -51,6 +51,8 @@ distribuée du processus.
   - ✅ Évaluation du projet immobilier ([**propertyCheckApp - FastAPI**](https://github.com/mchianale/loan_request_app/tree/main/propertyCheckApp)).  
   - ✅ Génération de la décision finale et du calendrier de remboursement ([**decisionApp - FastAPI**](https://github.com/mchianale/loan_request_app/tree/main/decisionApp)).  
 - Produit des logs vers `Kafka` pour centralisation et monitoring.  
+- **Celery Broker** : `RabbitMQ`
+- **Celery Backend** : `Redis`
 
 ---
 
@@ -75,25 +77,25 @@ distribuée du processus.
 ```
 # Mongodb
 MONGO_INITDB_ROOT_USERNAME=myuser
-MONGO_INITDB_ROOT_PASSWORD=mypassword
+MONGO_INITDB_ROOT_PASSWORD=<set_a_password>
 DATABASE_NAME=user_db
 # token bearer
-JWT_SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+JWT_SECRET_KEY=<secret_key_for_decrypt_session_token>
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 # ELK
 ELASTIC_USERNAME=elastic
-ELASTIC_PASSWORD=b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
-ELASTICSEARCH_SERVICEACCOUNTTOKEN=<generate_after>
+ELASTIC_PASSWORD=<set_a_password>
+ELASTICSEARCH_SERVICEACCOUNTTOKEN=<token_for_elastic_search>
 # Kafka kafka-0:9092,kafka-1:9092,kafka-2:9092
 KAFKA_BROKERS=kafka-0:9092,kafka-1:9092,kafka-2:9092
 # Celery
 REDIS_HOST=kredis
 REDIS_PORT=6379
-REDIS_PASSWORD=b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
+REDIS_PASSWORD=<set_a_password>
 REDIS_CELERY_DB_INDEX=10
 RABBITMQ_HOST=krabbitmq
 RABBITMQ_USERNAME=rabbitmq
-RABBITMQ_PASSWORD=b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8  
+RABBITMQ_PASSWORD=<set_a_password>  
 RABBITMQ_PORT=5672
 LOAN_TOPIC=loan_topic
 CREDIT_CHECK_URL=http://credit-check-app-service:8001/evaluate_credit
@@ -102,7 +104,7 @@ DECISION_URL=http://decision-app-service:8003/loan_decision
 NOTIFICATION_URL=http://loan-notification-service:8004/notify
 UPDATE_LOAN_URL=http://user-backend-service:8000/update_loan_request
 # ADMIN_PASSWORD to notify using LoanNotifyApp
-ADMIN_PASSWORD=admin_password_for_notification_security
+ADMIN_PASSWORD=<admin_password_for_notification_security>
 ```
 
 ### Premier lancement
@@ -118,7 +120,7 @@ curl -X POST -u elastic:<your_password> "localhost:9200/_security/service/elasti
 
 3. Modifier ensuite le fichier `.env`:
 ```
-ELASTICSEARCH_SERVICEACCOUNTTOKEN=<le toke retourné>
+ELASTICSEARCH_SERVICEACCOUNTTOKEN=<le token retourné>
 ```
 
 4. Relancer `docker-compose` avec la mise à jour:

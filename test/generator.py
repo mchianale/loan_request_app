@@ -7,7 +7,7 @@ import threading
 import time
 from tqdm import tqdm
 
-TOTAL_USER = 200
+TOTAL_USER = 100
 
 # init faker 
 fake = Faker()
@@ -133,7 +133,6 @@ class ourClient():
             except:
                 return 
         else:
-            print('LOGIN')
             try:
                 response = asyncio.run(login(username=self.client["username"], password=self.client["password"]))
                 if response.status_code == 201:
@@ -207,8 +206,8 @@ if __name__ == '__main__':
     for i in range(TOTAL_USER):
         users.append(ourClient())
 
-    for i in tqdm(range(500), desc="generate traffic"):
-        n_current_user = random.randint(0, min(50, TOTAL_USER))
+    for i in tqdm(range(200), desc="generate traffic"):
+        n_current_user = random.randint(0, min(10, TOTAL_USER))
         current_users = random.sample(users, n_current_user)
         threads = []
         for user in current_users:
