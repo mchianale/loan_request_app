@@ -113,7 +113,7 @@ Créer `rabbitmq.conf`:
 ```conf
 default_user=rabbitmq
 default_pass=<set_a_password>  
-
+```
 
 
 ### Premier lancement
