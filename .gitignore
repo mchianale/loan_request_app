@@ -24,3 +24,4 @@ userBackEnd/__pycache__/baseModels.cpython-310.pyc
 userBackEnd/__pycache__/mongoClient.cpython-310.pyc
 userBackEnd/__pycache__/utils.cpython-310.pyc
 .env
+rabbitmq.conf

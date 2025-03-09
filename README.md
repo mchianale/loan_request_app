@@ -73,7 +73,8 @@ distribuée du processus.
 ---
 
 ## Réutilsiation 
-### **Le fichier `.env`** 
+### Le fichier `.env`
+Créer un fichier `.env`:
 ```
 # Mongodb
 MONGO_INITDB_ROOT_USERNAME=myuser
@@ -106,6 +107,14 @@ UPDATE_LOAN_URL=http://user-backend-service:8000/update_loan_request
 # ADMIN_PASSWORD to notify using LoanNotifyApp
 ADMIN_PASSWORD=<admin_password_for_notification_security>
 ```
+
+### Config de `RabbitMQ`
+Créer `rabbitmq.conf`:
+```conf
+default_user=rabbitmq
+default_pass=<set_a_password>  
+
+
 
 ### Premier lancement
 1. Lancer une première fois `docker-compose`:
