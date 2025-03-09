@@ -155,7 +155,7 @@ def evaluate_credit(
     
     start_time = get_current_date()
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=10)   
+        response = requests.post(url, json=payload, headers=headers)   
     except Exception as e:
         raise self.retry(exc=e, countdown=countdown)
     # logs
@@ -338,7 +338,7 @@ def evaluate_property(
     
     start_time = get_current_date()
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=10)   
+        response = requests.post(url, json=payload, headers=headers)   
     except Exception as e:
         raise self.retry(exc=e, countdown=countdown)
     # logs
@@ -513,7 +513,7 @@ def loan_decision(
     
     start_time = get_current_date()
     try:
-        response = requests.post(DECISION_URL, json=payload, headers=headers, timeout=10)   
+        response = requests.post(DECISION_URL, json=payload, headers=headers)   
     except Exception as e:
         raise self.retry(exc=e, countdown=DECISION_COUNTDOWN)
     # logs
