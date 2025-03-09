@@ -121,7 +121,7 @@ class DecisionResponse(BaseModel):
     message: str = Field(..., description="Resume message based on evaluations.")
     credit_check_response : CreditCheckResponse = Field(..., description="Decision of credit evaluation.")
     property_check_response : PropertyCheckResponse = Field(..., description="Decision of property evaluation.")
-    repaymentSchedule : RepaymentSchedule = Field(..., description="Repayment Schedule")
+    repaymentSchedule : Optional[RepaymentSchedule] = Field(..., description="Repayment Schedule")
     status : LoanStatusEnum = Field(..., description="Final status (e.g., Approved, Denied)")
 
 class Loan(LoanRequestEntry):

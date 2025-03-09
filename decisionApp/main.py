@@ -30,7 +30,6 @@ def health_check()->HealthCheckResponse:
 )
 def loan_decision(decision_entry: DecisionEntry)->DecisionResponse:
     error, decisionResponse = None, None
-    
     try:  
         status_ = "Approved" 
         message_ = f"Decision of the loan request:\n1. Credit & Profile Evaluation:\n- {decision_entry.credit_check_response.message} ({decision_entry.credit_check_response.status})\n\n2. Property Evaluation:\n- {decision_entry.property_check_response.message} ({decision_entry.property_check_response.status})"
@@ -42,7 +41,8 @@ def loan_decision(decision_entry: DecisionEntry)->DecisionResponse:
                 message=message_,
                 status=status_,
                 credit_check_response=decision_entry.credit_check_response,
-                property_check_response=decision_entry.property_check_response
+                property_check_response=decision_entry.property_check_response,
+                repaymentSchedule=None       
             )
         else:
             status_ = LoanStatusEnum.approved

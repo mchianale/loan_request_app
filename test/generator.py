@@ -7,7 +7,7 @@ import threading
 import time
 from tqdm import tqdm
 
-TOTAL_USER = 100
+TOTAL_USER = 250
 
 # init faker 
 fake = Faker()
@@ -27,11 +27,12 @@ def generateFakeRequest():
         "Personal Loan",
         "Business Loan"
     ])
-    credit['loan_amount'] = random.random()*1000000 + 1500
+    rate = random.choice([10000, 10000,10000, 100000, 100000, 1000000])
+    credit['loan_amount'] = random.random()*rate + 1500
     credit['duration_months'] = random.randint(1, 240)
     credit['purpose']= fake.text()
     credit['property_location'] = fake.address()
-    credit['property_value'] =  random.random()*1000000 + 1500
+    credit['property_value'] =  random.random()*rate + 1500
     credit['property_type'] = random.choice([
         "House",
         "Apartment",
@@ -206,7 +207,7 @@ if __name__ == '__main__':
     for i in range(TOTAL_USER):
         users.append(ourClient())
 
-    for i in tqdm(range(200), desc="generate traffic"):
+    for i in tqdm(range(1000), desc="generate traffic"):
         n_current_user = random.randint(0, min(10, TOTAL_USER))
         current_users = random.sample(users, n_current_user)
         threads = []

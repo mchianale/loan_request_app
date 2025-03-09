@@ -52,7 +52,7 @@ def evaluate_credit(credit_entry : CreditCheckEntry)->CreditCheckResponse:
         if dti > 40:
             status_ = "Denied"
             message_ = "Debt-to-Income ratio too high, credit check denied."
-        elif confidence_score < 40:
+        elif confidence_score < 30:
             status_ = "Denied"
             message_ = "Low confidence score, credit check denied."
         # create response

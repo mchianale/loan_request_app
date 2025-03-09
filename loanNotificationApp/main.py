@@ -120,7 +120,7 @@ async def notify(authLoanNotificationMessage: AuthLoanNotificationMessage, hashe
             end_time=end_time,
             metadata={
                 'user_id': authLoanNotificationMessage.user_id,
-                'load_id': authLoanNotificationMessage.loan_id
+                'loan_id': authLoanNotificationMessage.loan_id
             }
             )
         asyncio.create_task(kafkaProducer.send_log_async(logEntry=logEntry))
@@ -136,7 +136,7 @@ async def notify(authLoanNotificationMessage: AuthLoanNotificationMessage, hashe
             end_time=end_time,
             metadata={
                 'user_id': authLoanNotificationMessage.user_id,
-                'load_id': authLoanNotificationMessage.loan_id
+                'loan_id': authLoanNotificationMessage.loan_id
             }
             )
     asyncio.create_task(kafkaProducer.send_log_async(logEntry=logEntry))
