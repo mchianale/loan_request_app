@@ -6,8 +6,6 @@ messagerie interservices. Les étudiants devront appliquer des notions de corout
 messages, tâches en arrière-plan et événements pour assurer une exécution efficace et
 distribuée du processus.
 
-## Demo
-
 ---
 
 ## Architecture 
