@@ -207,7 +207,7 @@ if __name__ == '__main__':
     for i in range(TOTAL_USER):
         users.append(ourClient())
 
-    for i in tqdm(range(1000), desc="generate traffic"):
+    for i in tqdm(range(500), desc="generate traffic"):
         n_current_user = random.randint(0, min(10, TOTAL_USER))
         current_users = random.sample(users, n_current_user)
         threads = []

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: celery-app
+  name: celery-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: celery-app
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: celery-app
+    spec:
+      initContainers:
+        - name: wait-for-rabbitmq
+          image: busybox
+          command: ['sh', '-c', 'until nc -z krabbitmq 5672; do echo waiting for RabbitMQ; sleep 2; done;']
+      containers:
+        - env:
+            - name: ADMIN_PASSWORD
+              value: admin_password_for_notification_security
+            - name: CREDIT_CHECK_URL
+              value: http://credit-check-app-service:8001/evaluate_credit
+            - name: DECISION_URL
+              value: http://decision-app-service:8003/loan_decision
+            - name: KAFKA_BROKERS
+              value: kafka-0:9092,kafka-1:9092,kafka-2:9092
+            - name: LOAN_TOPIC
+              value: loan_topic
+            - name: NOTIFICATION_URL
+              value: http://loan-notification-service:8004/notify
+            - name: PROPERTY_CHECK_URL
+              value: http://property-check-app-service:8002/evaluate_property
+            - name: RABBITMQ_HOST
+              value: krabbitmq
+            - name: RABBITMQ_PASSWORD
+              value: 'b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8  '
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USERNAME
+              value: rabbitmq
+            - name: REDIS_CELERY_DB_INDEX
+              value: "10"
+            - name: REDIS_HOST
+              value: kredis
+            - name: REDIS_PASSWORD
+              value: b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
+            - name: REDIS_PORT
+              value: "6379"
+            - name: UPDATE_LOAN_URL
+              value: http://user-backend-service:8000/update_loan_request
+          image: mchianale/celery-app
+          name: celery-app
+          stdin: true
+          tty: true
+      restartPolicy: Always

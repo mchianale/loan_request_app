@@ -19,11 +19,11 @@ st.subheader(':green[New Loan Request]')
 
 # One credit fields
 credit_type = st.selectbox(':blue[Credit Type]', placeholder='Enter Your Credit Type', options=tuple(get_values_credit_type()))
-loan_amount = st.number_input(':blue[Amount]', min_value=0.0, step=1.0, value=20000.0, format="%.2f")
+loan_amount = st.number_input(':blue[Amount]', min_value=0.0, step=1.0, format="%.2f")
 duration_months = st.number_input(':blue[Favorite Duration in Months]', min_value=1, step=1, value=12)
-purpose = st.text_input(':blue[Purpose of the Loan]', value="jdjd")
-property_location = st.text_input(':blue[Location of the property]', value="jdjd")
-property_value = st.number_input(':blue[Approximate price of this property]', min_value=0.0, step=1.0, value=2000.0, format="%.2f")
+purpose = st.text_input(':blue[Purpose of the Loan]')
+property_location = st.text_input(':blue[Location of the property]')
+property_value = st.number_input(':blue[Approximate price of this property]', min_value=0.0, step=1.0, format="%.2f")
 property_type = st.selectbox(':blue[Status]', placeholder='Type of the property', options=tuple(get_values_property_type()))
 
 

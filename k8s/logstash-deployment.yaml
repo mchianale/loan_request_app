@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: logstash
+  name: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: logstash
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: logstash
+    spec:
+      containers:
+        - env:
+            - name: ELASTICSEARCH_PASSWORD
+              value: b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
+            - name: ELASTICSEARCH_USERNAME
+              value: elastic
+            - name: KAFKA_BROKERS
+              value: kafka-0:9092,kafka-1:9092,kafka-2:9092
+            - name: LS_JAVA_OPTS
+              value: -Xmx256m -Xms256m
+            - name: XPACK_MONITORING_ELASTICSEARCH_HOSTS
+              value: elasticsearch:9200
+            - name: XPACK_MONITORING_ELASTICSEARCH_PASSWORD
+              value: b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
+            - name: XPACK_MONITORING_ELASTICSEARCH_USERNAME
+              value: elastic
+            - name: XPACK_MONITORING_ENABLED
+              value: "true"
+          image: mchianale/logstash
+          name: logstash
+      restartPolicy: Always

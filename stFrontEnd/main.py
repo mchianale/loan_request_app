@@ -130,7 +130,6 @@ def _logout():
     st.session_state.ws.close()
     st.session_state.clear() 
     controller.remove('access_token')
-    controller.remove('say_hello')
     st.rerun()
 
 

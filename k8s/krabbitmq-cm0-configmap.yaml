@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  rabbitmq.conf: |+
+    default_user=rabbitmq
+    default_pass=b2ecc628566048608451c61b6b210ee6467edc7aefa911efafe4e4c7673f17a8
+
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: krabbitmq
+  name: krabbitmq-cm0

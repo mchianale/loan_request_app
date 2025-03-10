@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: user-backend-service
+  name: user-backend-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: user-backend-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: user-backend-service
+    spec:
+      containers:
+        - env:
+            - name: ACCESS_TOKEN_EXPIRE_MINUTES
+              value: "30"
+            - name: ADMIN_PASSWORD
+              value: admin_password_for_notification_security
+            - name: DATABASE_NAME
+              value: user_db
+            - name: JWT_SECRET_KEY
+              value: 09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+            - name: KAFKA_BROKERS
+              value: kafka-0:9092,kafka-1:9092,kafka-2:9092
+            - name: LOAN_TOPIC
+              value: loan_topic
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: mypassword
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: myuser
+          image: mchianale/user-backend-service
+          name: user-backend-service
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          stdin: true
+          tty: true
+      restartPolicy: Always

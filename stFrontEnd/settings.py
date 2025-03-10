@@ -29,7 +29,7 @@ with st.form(key='update_profile', clear_on_submit=True):
     nationality = st.text_input(':blue[Nationality]', placeholder='Enter Your Nationality', value=st.session_state.userInformation.nationality)
     
     work_status = st.selectbox(':blue[Work Status]', placeholder='Enter Your Work Status', options=tuple([st.session_state.userInformation.work_status.value] + [v for v in get_work_status_values() if v != st.session_state.userInformation.work_status.value]))
-    gross_monthly_income = st.number_input(':blue[Gross Monthly Income]', min_value=0.0, step=0.1, value=0.0)    
+    gross_monthly_income = st.number_input(':blue[Gross Monthly Income]', min_value=0.0, step=0.1, value=st.session_state.userInformation.gross_monthly_income)    
          
     submitted = st.form_submit_button("Update your profile")
     if submitted:

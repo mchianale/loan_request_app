@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  mongod.conf: "storage:\n  dbPath: /data/db\n\nnet:\n  bindIp: 0.0.0.0\n  port: 27017\n  \nsecurity:\n  authorization: enabled"
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: mongodb
+  name: mongodb-cm1

@@ -1,6 +1,6 @@
 
 from celery.signals import worker_ready
-from celery import group, chain
+from celery import group, chain, chord
 import requests
 import json
 from confluent_kafka import Consumer, KafkaException
@@ -83,7 +83,8 @@ def kafka_consumer_process():
                 save_id.s(**save_id_params)
             ])
             # 🔥 Execute the workflow (this starts execution!)
-            workflow = chain(parallel_tasks | loan_decision.s()).apply_async()
+            #workflow = chain(parallel_tasks | loan_decision.s()).apply_async()
+            workflow = chord(parallel_tasks)(loan_decision.s())
             print(f"🆔 Chord Execution ID: {workflow.id}")            
 
     except KafkaException as e:
@@ -109,7 +110,7 @@ for task_id in other_task_ids:
         continue
 """
 
-@app.task(bind=True, rate_limit="100/m")
+@app.task(bind=True, rate_limit="20/m")
 def save_id(
     self,
     loan_id : str,
@@ -120,7 +121,7 @@ def save_id(
         'user_id': user_id
     }
     
-@app.task(bind=True, max_retries=3, rate_limit="100/m")
+@app.task(bind=True, max_retries=3, rate_limit="20/m")
 def evaluate_credit(
     self,
     loan_amount: float,
@@ -238,7 +239,9 @@ def evaluate_credit(
         except Exception as e:
             print(f"❌ Kafka Error: {e}")
             pass # log will not be see but don't need to impact user loan request
-
+        
+        if kill:
+            raise Exception("Credit evaluation : DENIED")
         return response
     
     error_msg = response.get('detail')
@@ -313,7 +316,7 @@ def evaluate_credit(
     raise Exception(f"Failed to evaluate credit: {error_msg}")
 
 
-@app.task(bind=True, max_retries=3, rate_limit="100/m")
+@app.task(bind=True, max_retries=3, rate_limit="20/m")
 def evaluate_property(
     self,
     loan_amount: float,
@@ -420,6 +423,10 @@ def evaluate_property(
         except Exception as e:
             print(f"❌ Kafka Error: {e}")
             pass
+
+        if kill:
+            raise Exception("Property evaluation : DENIED")
+        
         return response
     error_msg = response.get('detail')
     error_msg = error_msg[0].get('msg') if isinstance(error_msg, list) else error_msg
@@ -493,7 +500,7 @@ def evaluate_property(
     raise Exception(f"Failed to evaluate property: {error_msg}")
 
 
-@app.task(bind=True, max_retries=3, rate_limit="100/m")
+@app.task(bind=True, max_retries=3, rate_limit="20/m")
 def loan_decision(
     self,
     result

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: kafka-0
+  name: kafka-0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kafka-0
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\matte\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml -o k8s/
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: kafka-0
+    spec:
+      initContainers:
+        - name: wait-for-zookeeper
+          image: busybox
+          command: ['sh', '-c', 'until nc -z zookeeper 2181; do echo waiting for Zookeeper; sleep 2; done;']
+
+      containers:
+        - env:
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: INTERNAL://kafka-0:9092,EXTERNAL://localhost:29092
+            - name: KAFKA_CFG_BROKER_ID
+              value: "0"
+            - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
+              value: INTERNAL
+            - name: KAFKA_CFG_LISTENERS
+              value: INTERNAL://:9092,EXTERNAL://:29092
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: zookeeper:2181
+          image: bitnami/kafka:latest
+          name: kafka-0
+          ports:
+            - containerPort: 29092
+              protocol: TCP
+            - containerPort: 9092
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /bitnami/kafka
+              name: kafka-0-data
+      restartPolicy: Always
+      volumes:
+        - name: kafka-0-data
+          persistentVolumeClaim:
+            claimName: kafka-0-data

@@ -337,7 +337,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - ./mongoDB/${DATABASE_NAME}:/mongoDB/${DATABASE_NAME}
+      - mongodb_data:/data/db #mongodb_data:/mongoDB/${DATABASE_NAME}
       - ./mongoDB/mongo_config/mongod.conf:/etc/mongo/mongod.conf
     command: [ "mongod", "--config", "/etc/mongo/mongod.conf" ]
     networks:
@@ -366,6 +366,8 @@ networks:
     internal: true
 
 volumes:
+  mongodb_data:   
+    name: mongodb_data
   zookeeper_data:
     name: zookeeper_data
   kafka_0_data:

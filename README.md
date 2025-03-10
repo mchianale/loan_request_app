@@ -174,24 +174,46 @@ curl -X DELETE -u elastic:<your_password>  "http://localhost:9200/logs"
 
 ---
 
-## Kibana Dashboard
+### Déploiement
+#### 🏗️ 1. Build et Push des Images Docker
+Exécuter le script pour construire et envoyer les images Docker :
+```bash
+bash buildAndPush.sh
+```
 
-# a faire 
-## Test
-## Kubernetes
-## dashboard
+#### 🛠 2. Conversion de docker-compose.yml en Manifests Kubernetes
+Nous utilisons [kompose](https://kompose.io/installation/) pour convertir `docker-compoe.yml` en fichiers YAML pour `Kubernetes` :
+```bash
+kompose convert -f docker-compose.yml -o k8s/
+```
 
-## README
-## rapport
-### Intro
-### Architecture globale 
-### Gestion des uilisateurs (login / singup token de session etc.. )
-### Service de demande de pret (chaque service & celeri)
-### Notification en tmpes reel (websocket et celeri)
-### Interac graphiqye utilisateur
-### Centralisation des logs
-### Cloud Kubernetes
-### Test 
+#### 🌍 3. Démarrer Minikube et Appliquer les Manifests
+Réinitialiser et relancer `Minikube` avant d'appliquer les fichiers générés :
+```bash
+minikube delete
+minikube start
+kubectl apply -f k8s/
+kubectl get pods
+```
+
+#### 4. Accéder aux Services depuis l'Extérieur du Cluster
+Comme les services sont en `ClusterIP` par défaut, nous devons utiliser le port-forwarding pour les rendre accessibles localement :
+```bash
+kubectl port-forward svc/user-backend-service 8000:8000 &
+kubectl port-forward svc/loan-notification-service 8004:8004 &
+kubectl port-forward svc/elasticsearch 9200:9200 &
+kubectl port-forward svc/kibana 5601:5601 &
+```
+
+Sur **Windows** :
+```bash
+Start-Job -ScriptBlock { kubectl port-forward svc/user-backend-service 8000:8000 }
+Start-Job -ScriptBlock { kubectl port-forward svc/loan-notification-service 8004:8004 }
+Start-Job -ScriptBlock { kubectl port-forward svc/elasticsearch 9200:9200 }
+Start-Job -ScriptBlock { kubectl port-forward svc/kibana 5601:5601 }
+```
+
+
 
 
 
